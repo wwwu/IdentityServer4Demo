@@ -25,6 +25,26 @@ namespace IdentityServer
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddTestUsers(TestUsers.Users);
 
+            //配置支持OpenId的第三方登录
+            services.AddAuthentication()
+                .AddOpenIdConnect("oidc", "Demo IdentityServer", options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+                    options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+                    options.SaveTokens = true;
+
+                    options.Authority = "https://demo.identityserver.io/";
+                    options.ClientId = "native.code";
+                    options.ClientSecret = "secret";
+                    options.ResponseType = "code";
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        NameClaimType = "name",
+                        RoleClaimType = "role"
+                    };
+                });
+
             services.AddControllersWithViews();
         }
 
