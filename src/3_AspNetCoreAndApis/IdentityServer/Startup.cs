@@ -37,6 +37,8 @@ namespace IdentityServer
             }
 
             app.UseRouting();
+            //必须在UseAuthorization之前
+            app.UseIdentityServer();
             //The call to app.UseAuthorization() must appear between app.UseRouting() and app.UseEndpoints(...)
             app.UseAuthorization();
             //启用静态文件服务
@@ -48,7 +50,6 @@ namespace IdentityServer
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            app.UseIdentityServer();
         }
     }
 }
