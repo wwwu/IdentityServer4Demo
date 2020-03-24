@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script src="oidc-client/oidc-client.js"></script>
+    <script>
+        /* 
+         * 此HTML文件是用户登录到IdentityServer服务器后回调的页面。
+         * 它将完成与IdentityServer服务器的 OpenID 连接协议登录握手。
+         * 登录完成后，将用户重定向回主页面。
+         */
+        new Oidc.UserManager({ response_mode: "query" }).signinRedirectCallback().then(function () {
+            window.location = "index.html";
+        }).catch(function (e) {
+            console.error(e);
+        });
+    </script>
+</body>
+</html>
